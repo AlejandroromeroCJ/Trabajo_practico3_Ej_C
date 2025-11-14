@@ -1,0 +1,56 @@
+.gestion-vehiculos{
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  max-width: 100vw;
+  height: auto;
+  color: #222;
+  background-color: #eee;
+}
+
+.gestion-vehiculos--list{
+  margin-top: 20px;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 12px;
+}
+
+.tabla-vehiculos{
+  width: 100%;
+  border-collapse: collapse;
+  font-family: sans-serif;
+}
+
+.tabla-vehiculos thead{
+  background-color: #007BFF;
+  color: #eee;
+}
+
+.tabla-vehiculos th{
+  text-align: center;
+  padding: 2px;
+}
+
+.tabla-vehiculos td{
+  border-bottom: 1px solid #afafaf;
+  text-align: center;
+}
+
+.gestionar-vehiculos-table--action-btns{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2px;
+  padding: 4px;
+}
+
+.agregar-vehiculo--btn-container{
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.agregar-vehiculo--btn{
+  width: auto;
+}

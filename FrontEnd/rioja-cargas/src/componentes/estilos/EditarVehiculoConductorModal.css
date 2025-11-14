@@ -1,0 +1,59 @@
+.editar-vehiculo--modal{
+  display: flex;
+  position: fixed;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  right: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, .5);
+}
+
+.editar-vehiculo--modal-box{
+  width: 80%;
+  min-width: 400px;
+  max-width: 95vw;
+  min-height: 300px;
+  max-height: 90vh;
+  height: auto;
+  background-color: #eee;
+  color: #222;
+  border-radius: 1rem;
+  position: relative;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 1rem;
+}
+
+.close-editar-modal--btn{
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 24px;
+  height: 24px;
+  border-radius: 24px;
+  border: 1px solid #222;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.editar-vehiculo--form{
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.editar-vehiculo--form input{
+  width: 400px;
+  height: 40px;
+  padding: 12px;
+  background-color: #fff;
+  color: #222;
+  border-radius: 12px;
+}
