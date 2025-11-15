@@ -12,11 +12,13 @@ conectarDB();
 const app = express();
 const port = 4545;
 
+// Para interpretar body como JSON
 app.use(express.json());
 app.use(cors());
 
 authConfig();
 app.get("/", (req, res) => {
+  // Responder con string
   res.send("Hola mundo!");
 });
 

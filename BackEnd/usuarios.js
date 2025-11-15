@@ -9,13 +9,22 @@ const router = express.Router();
 
 router.get("/", verificarAutenticacion, async (req, res) => {
   const [rows] = await db.execute("SELECT * FROM usuarios");
+  // RECORDAR Quitar la contraseña en la api
   res.json({
     success: true,
     usuarios: rows.map((u) => ({ ...u, password_hash: undefined })),
   });
 });
 
-router.get("/:id",verificarAutenticacion,validarId,verificarValidaciones,async (req, res) => {
+router.get(
+  "/:id",
+  //Aqui si se autentica
+  verificarAutenticacion,
+  validarId,
+  verificarValidaciones,
+  //Aqui no se autentica
+  //verificarAutenticacion,
+  async (req, res) => {
     const id = Number(req.params.id);
     const [rows] = await db.execute(
       "SELECT idusuarios, nombre, email FROM usuarios WHERE idusuarios=?",
@@ -47,7 +56,10 @@ router.post(
   verificarValidaciones,
   async (req, res) => {
     const { nombre, email, password } = req.body;
+
+    // Creamos Hash de la contraseña con bcrypt
     const hashedPassword = await bcrypt.hash(password, 12);
+
     const [result] = await db.execute(
       "INSERT INTO usuarios (nombre, email, password) VALUES (?,?,?)",
       [nombre, email, hashedPassword]

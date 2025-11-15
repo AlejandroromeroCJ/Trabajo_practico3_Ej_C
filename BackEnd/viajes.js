@@ -12,7 +12,9 @@ router.get("/", async (req, res) => {
 
 // POST viajes
 router.post("/", async (req, res) => {
+  // Obtengo body
   const { vehiculo_id,conductor_id,fecha_salida,fecha_llegada,origen,destino,kilometros,observaciones } = req.body;
+
   const [result] = await db.execute(
     "INSERT INTO viajes (vehiculo_id,conductor_id,fecha_salida,fecha_llegada,origen,destino,kilometros,observaciones) VALUES (?,?,?,?,?,?,?,?)",
     [vehiculo_id,conductor_id,fecha_salida,fecha_llegada,origen,destino,kilometros,observaciones]

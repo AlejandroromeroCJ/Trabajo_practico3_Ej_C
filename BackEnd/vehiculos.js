@@ -12,7 +12,9 @@ router.get("/", async (req, res) => {
 
 // POST VEHICULOS
 router.post("/", async (req, res) => {
+  // Obtengo body
   const { marca,modelo,patente,año,capacidadkg } = req.body;
+
   const [result] = await db.execute(
     "INSERT INTO vehiculos (marca,modelo,patente,año,capacidadkg) VALUES (?,?,?,?,?)",
     [marca,modelo,patente,año,capacidadkg]
@@ -25,16 +27,27 @@ router.post("/", async (req, res) => {
 
 //DELETE vehiculos
 router.delete("/:id", validarId, verificarValidaciones, async (req, res) => {
+  // Obtengo id
   const id = Number(req.params.id);
+
   await db.execute("DELETE FROM vehiculos WHERE idvehiculos=?", [id]);
   res.json({ success: true, data: id });
 });
 
 //Modificar vehiculos
-router.put("/:id",validarId,verificarValidaciones,async (req, res) => {
+router.put(
+  "/:id",
+  validarId,
+  verificarValidaciones,
+  async (req, res) => {
+    // Obtengo id
     const id = Number(req.params.id);
+
+    // Obtengo body
     const { marca,modelo,patente,año,capacidadkg } = req.body;
+
     await db.execute("UPDATE vehiculos SET marca=?, modelo=?, patente=?, año=?, capacidadkg=? WHERE idvehiculos=?", [marca,modelo,patente,año,capacidadkg, id]);
+
     res.json({ success: true, data: { id, marca,modelo,patente } });
   }
 );
