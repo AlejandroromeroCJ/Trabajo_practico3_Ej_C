@@ -1,30 +1,52 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './estilos/GestionVehiculos.css'
 import EditarVehiculoConductorModal from './EditarVehiculoConductorModal'
 import Swal from 'sweetalert2'
+import { useDB } from '../contexto/databaseContext'
 
 export default function GestionVehiculos(){
   const [vehiculoSeleccionadoID, setVehiculoSeleccionadoID] = useState(0)
   const [agregarVehiculoModal, setAgregarVehiculoModal] = useState(false)
+  const [vehiculos, setVehiculos] = useState([])
 
-  const vehiculosEjemplo = [
-    {
-      id: "abc123",
-      marca: "Mercedes",
-      modelo: "Pro max",
-      patente: "AB123CD",
-      año: 2019,
-      capacidad: 40
-    }, 
-    {
-      id: "bcd321",
-      marca: "Chevrolet",
-      modelo: "Ultra Fast",
-      patente: "HD321DS",
-      año: 2020,
-      capacidad: 25
+  const {obtenerVehiculos} = useDB()
+
+  useEffect(() => {
+    const fetchVehiculos = async () => {
+      let vehiculos = await obtenerVehiculos()
+      if(vehiculos.success){
+        setVehiculos(vehiculos.data)
+        return
+      }
+
+      Swal.fire({
+        icon: "error",
+        tile: "Error obteniendo vehiculos",
+        color: "#222"
+      })
     }
-  ]
+
+    fetchVehiculos()
+  },[obtenerVehiculos])
+
+  // const vehiculosEjemplo = [
+  //   {
+  //     id: "abc123",
+  //     marca: "Mercedes",
+  //     modelo: "Pro max",
+  //     patente: "AB123CD",
+  //     año: 2019,
+  //     capacidad: 40
+  //   }, 
+  //   {
+  //     id: "bcd321",
+  //     marca: "Chevrolet",
+  //     modelo: "Ultra Fast",
+  //     patente: "HD321DS",
+  //     año: 2020,
+  //     capacidad: 25
+  //   }
+  // ]
 
   const handleDelete = (id) => {
     Swal.fire({
@@ -62,7 +84,7 @@ export default function GestionVehiculos(){
               <th>Modelo</th>
               <th>Patente</th>
               <th>Año</th>
-              <th>Capacidad</th>
+              <th>Capacidad (KG)</th>
               <th>
                 Acciones
               </th>
@@ -70,17 +92,17 @@ export default function GestionVehiculos(){
           </thead>
           <tbody>
             {
-              vehiculosEjemplo.map((v) => (
-                <tr key={v.id}>
-                  <td>{v.id}</td>
+              vehiculos.map((v) => (
+                <tr key={v.idvehiculos}>
+                  <td>{v.idvehiculos}</td>
                   <td>{v.marca}</td>
                   <td>{v.modelo}</td>
                   <td>{v.patente}</td>
                   <td>{v.año}</td>
-                  <td>{v.capacidad}</td>
+                  <td>{v.capacidadkg}</td>
                   <td className='gestionar-vehiculos-table--action-btns'>
-                    <button onClick={() => {handleDelete(v.id)}}>Eliminar</button>
-                    <button onClick={() => {setVehiculoSeleccionadoID(v.id)}}>Editar</button>
+                    <button onClick={() => {handleDelete(v.idvehiculos)}}>Eliminar</button>
+                    <button onClick={() => {setVehiculoSeleccionadoID(v.idvehiculos)}}>Editar</button>
                   </td>
                 </tr>
               ))
@@ -92,7 +114,7 @@ export default function GestionVehiculos(){
         vehiculoSeleccionadoID !== 0 &&
         <EditarVehiculoConductorModal 
           esVehiculo={true}
-          elemento={vehiculosEjemplo.filter(c => c.id == vehiculoSeleccionadoID)[0]}
+          elemento={vehiculos.filter(c => c.idvehiculos == vehiculoSeleccionadoID)[0]}
           setElemento={setVehiculoSeleccionadoID}
         />      
       }

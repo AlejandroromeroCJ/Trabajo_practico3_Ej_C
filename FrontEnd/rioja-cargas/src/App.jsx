@@ -1,18 +1,15 @@
 import './App.css'
-import GestionConductores from './componentes/GestionConductores'
-import Header from './componentes/Header'
-import Hero from './componentes/Hero'
-import GestionVehiculos from './componentes/GestionVehiculos'
+import { Routes, Route } from "react-router-dom";
+import Home from './pages/Home'
+import LoginPage from './pages/LoginPage';
 
 function App() {
-
   return (
-    <>
-      <Header/>
-      <Hero/>
-      <GestionVehiculos/>
-      <GestionConductores/>
-    </>
+    <Routes>
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="/" element={<Home />} />
+      <Route path="/home" element={<Home />} />
+    </Routes>
   )
 }
 
